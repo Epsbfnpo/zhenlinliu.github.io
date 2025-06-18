@@ -82,6 +82,14 @@
             position: relative;
             z-index: 1;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .name {
@@ -292,16 +300,16 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-            
+
             .contact-info {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .name {
                 font-size: 2em;
             }
-            
+
             .header {
                 padding: 40px 20px;
             }
@@ -315,7 +323,10 @@
 <body>
     <div class="container">
         <header class="header">
-            <div class="profile-img">ZL</div>
+            <div class="profile-img">
+                <img src="images/Photo.jpg" alt="Zhenlin Liu" id="profile-image">
+                <span id="fallback-text" style="display: none;">ZL</span>
+            </div>
             <h1 class="name">Zhenlin Liu</h1>
             <p class="title">Computer Vision Researcher & Deep Learning Engineer</p>
             <div class="contact-info">

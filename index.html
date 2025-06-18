@@ -3,17 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Homepage</title>
+    <title>Zhenlin Liu - Computer Vision Researcher</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .name { color: #5a9bd4; font-size: 2.5em; font-weight: bold; text-align: left; margin-left: 20px; }
-        .subtitle { color: #5a9bd4; font-size: 1.2em; text-align: left; margin-left: 20px; margin-top: -10px; }
-        .email { color: #333; font-size: 1em; text-align: left; margin-left: 20px; margin-top: 5px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .name {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 1.3em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e74c3c;
+        }
+
+        .education-item, .experience-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-item::before, .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(52, 152, 219, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .education-item:hover::before, .experience-item:hover::before {
+            opacity: 1;
+        }
+
+        .education-item:hover, .experience-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .item-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .item-date {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .research-paper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-paper::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            border-radius: 15px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .languages {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .language {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .name {
+                font-size: 2em;
+            }
+            
+            .header {
+                padding: 40px 20px;
+            }
+        }
+
+        .emoji {
+            font-style: normal;
+        }
     </style>
 </head>
 <body>
-    <h1 class="name">Zhenlin Liu (刘震林)</h1>
-    <p class="subtitle">Bachelor's Graduate</p>
-    <p class="email">Email: zhenlinliu20020830@gmail.com</p>
+    <div class="container">
+        <header class="header">
+            <div class="profile-img">ZL</div>
+            <h1 class="name">Zhenlin Liu</h1>
+            <p class="title">Computer Vision Researcher & Deep Learning Engineer</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="emoji">📧</span>
+                    <span>zhenlinliu20020830@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">📱</span>
+                    <span>+86 15805165850</span>
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">📍</span>
+                    <span>Nanjing, China</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="section">
+                <h2 class="section-title"><span class="emoji">🎓</span> Education</h2>
+                <div class="education-item">
+                    <h3 class="item-title">Bachelor of Advanced Computing (Honours)</h3>
+                    <p class="item-subtitle">The University of Sydney</p>
+                    <span class="item-date">Feb 2021 - Dec 2024</span>
+                    <p><strong>First Class Honours</strong> - Top 6% of cohort</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title"><span class="emoji">🔬</span> Research Interests</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-icon">🧠</div>
+                        <h3>Deep Learning</h3>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-icon">👁️</div>
+                        <h3>Computer Vision</h3>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-icon">🏥</div>
+                        <h3>Biomedical Imaging</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section full-width">
+                <h2 class="section-title"><span class="emoji">📄</span> Research Output</h2>
+                <div class="research-paper">
+                    <h3 class="item-title">SdADC: Semi-supervised Diffusion MRI Artefact Detection and Classification</h3>
+                    <p class="item-subtitle">International Society for Magnetic Resonance in Medicine 2025 (under review)</p>
+                    <p>Advanced deep learning approach for detecting and classifying artifacts in diffusion MRI using semi-supervised techniques.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title"><span class="emoji">🔬</span> Research Experience</h2>
+                
+                <div class="experience-item">
+                    <h3 class="item-title">Honours Research Student</h3>
+                    <p class="item-subtitle">University of Sydney - Supervisor: A/Prof Weidong Cai</p>
+                    <span class="item-date">Dec 2023 - Nov 2024</span>
+                    <p>Led development of deep learning models for dMRI artifact detection using synthetic data generation and residual blocks for improved generalization.</p>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="item-title">Research Volunteer</h3>
+                    <p class="item-subtitle">University of Sydney - Supervisor: Prof Judy Kay</p>
+                    <span class="item-date">Jul 2023 - Nov 2023</span>
+                    <p>Investigated Visual Language Re-enactment (VLR) impact on learning experiences, designed experimental frameworks and calibrated eye-tracking technology.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title"><span class="emoji">💼</span> Professional Experience</h2>
+                
+                <div class="experience-item">
+                    <h3 class="item-title">Deep Learning Engineer</h3>
+                    <p class="item-subtitle">Google Beijing Co., Ltd. (Online)</p>
+                    <span class="item-date">May 2023 - Nov 2023</span>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="item-title">Mobile Communication Engineer</h3>
+                    <p class="item-subtitle">Occom Pty Ltd, Sydney</p>
+                    <span class="item-date">Feb 2023 - May 2023</span>
+                </div>
+            </section>
+
+            <section class="section full-width">
+                <h2 class="section-title"><span class="emoji">🌐</span> Languages</h2>
+                <div class="languages">
+                    <div class="language">🇨🇳 Mandarin (Native)</div>
+                    <div class="language">🇺🇸 English (Fluent)</div>
+                </div>
+            </section>
+
+            <section class="section full-width">
+                <h2 class="section-title"><span class="emoji">🏆</span> Achievements</h2>
+                <div class="experience-item">
+                    <h3 class="item-title">Champion of Round Table Knight Debate 2024</h3>
+                    <p class="item-subtitle">University of Sydney Mandarin Debating Society</p>
+                    <span class="item-date">Mar 2022 - Nov 2024</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                section.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effects to contact items
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const text = this.textContent.trim();
+                    if (text.includes('@')) {
+                        window.open(`mailto:${text.split('📧')[1].trim()}`);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
